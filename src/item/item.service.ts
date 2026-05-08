@@ -52,4 +52,16 @@ export class ItemService {
       where: { id },
     });
   }
+
+  async findByCategory(categoryId: number) {
+  return this.prisma.item.findMany({
+    where: {
+      categoryId,
+    },
+
+    include: {
+      category: true,
+    },
+  });
+}
 }

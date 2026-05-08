@@ -43,4 +43,9 @@ export class ItemController {
   findAll() {
     return this.itemService.findAll();
   }
+  
+  @Get('category/:id')
+  findByCategory(@Param('id', ParseIntPipe) id: number) {
+    return this.itemService.findByCategory(id);
+  }
 }
