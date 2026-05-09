@@ -32,10 +32,11 @@ model Item {
   stock_amount   Int
   minimum_stock  Int?
 
-  selling_price  Float
-  purchase_price Float
+  selling_price  Float?
+  purchase_price Float?
 
   weight_size    String?
+  unit           String
 
   save_location  String?
   description    String?

@@ -8,9 +8,12 @@ export class ItemService {
   
   constructor(private prisma: PrismaService) {}
   
-  async create(createItemDto: CreateItemDto) {
+  async create(createItemDto: CreateItemDto, filename?: string) {
     return this.prisma.item.create({
-      data: createItemDto,
+      data: {
+        ...createItemDto,
+        item_picture: filename,
+      },
     });
   }
 

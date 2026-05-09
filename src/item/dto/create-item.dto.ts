@@ -36,6 +36,10 @@ export class CreateItemDto {
   @IsString()
   weight_size?: string;
 
+  @IsString()
+  @IsNotEmpty()
+  unit!: string;
+
   @IsOptional()
   @IsString()
   save_location?: string;
@@ -43,8 +47,4 @@ export class CreateItemDto {
   @IsOptional()
   @IsString()
   description?: string;
-
-  @IsOptional()
-  @IsString()
-  item_picture?: string;
 }
