@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsInt,
   IsNotEmpty,
@@ -12,25 +13,33 @@ export class CreateItemDto {
   @IsNotEmpty()
   item_name!: string;
 
+  @Type(() => Number)
   @IsInt()
   categoryId!: number;
 
+  @Type(() => Number)
   @IsInt()
   @Min(0)
   stock_amount!: number;
 
+  @Type(() => Number)
   @IsOptional()
   @IsInt()
   @Min(0)
   minimum_stock?: number;
 
+  @Type(() => Number)
+  @IsOptional()
   @IsNumber()
   @Min(0)
-  selling_price!: number;
+  selling_price?: number;
 
+  
+  @Type(() => Number)
+  @IsOptional()
   @IsNumber()
   @Min(0)
-  purchase_price!: number;
+  purchase_price?: number;
 
   @IsOptional()
   @IsString()
