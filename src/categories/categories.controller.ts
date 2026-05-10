@@ -7,6 +7,7 @@ import {
   Patch,
   ParseIntPipe,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -34,13 +35,19 @@ export class CategoriesController {
     return this.categoriesService.remove(id);
   }
 
+  @Get()
+  findAll(
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('sortBy') sortBy = 'createdAt',
+    @Query('order') order: 'asc' | 'desc' = 'desc',
+    @Query('search') search = '',
+  ) {
+    return this.categoriesService.findAll(Number(page), Number(limit), sortBy, order, search);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.categoriesService.findOne(id);
-  }
-
-  @Get()
-  findAll() {
-    return this.categoriesService.findAll();
   }
 }

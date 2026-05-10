@@ -48,18 +48,48 @@ export class CategoriesService {
     });
   }
 
-  async findAll() {
+  async findAll(
+    page: number,
+    limit: number,
+    sortBy: string,
+    order: 'asc' | 'desc',
+    search: string,
+  ) {
+    const skip = (page - 1) * limit;
+    const where = {
+      category_name: {
+        contains: search,
+      },
+    };
+    const total = await this.prisma.category.count({
+      where,
+    });
+    
     const categories = await this.prisma.category.findMany({
+      where,
+      skip,
+      take: limit,
       include: {
         _count: {
           select: { items: true },
         },
       },
+      orderBy: {
+        [sortBy]: order,
+      },
     });
-    
-    return categories.map((category) => ({
-      ...category,
-      itemCount: category._count.items,
-    }));
+
+    return {
+      data: categories.map((category) => ({
+        id: category.id,
+        category_name: category.category_name,
+        description: category.description,
+        createdAt: category.createdAt.toISOString().split('T')[0],
+        itemCount: category._count.items,
+      })),
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 }
